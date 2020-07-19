@@ -44,7 +44,7 @@ public class CurrencyRatesApiServiceImpl implements CurrencyRatesApiService {
                 Element table = tables.get(0);
                 Elements rows = table.select("tr");
                 List<Double> values = new ArrayList<>();
-                for (int j = 2; j < rows.size() - 1; j++) {
+                for (int j = 2; j < rows.size(); j++) {
                     Elements columns = rows.get(j).select("td");
                     values.add(Double.valueOf(columns.get(1).text()));
 

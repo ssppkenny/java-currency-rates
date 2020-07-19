@@ -5,6 +5,7 @@ import tech.tablesaw.api.DoubleColumn;
 import tech.tablesaw.api.Table;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.concurrent.*;
 import java.util.stream.IntStream;
 
@@ -31,11 +32,11 @@ public class JobExecutor {
 
         CompletionService<Table> completionService = new ExecutorCompletionService<>(executor);
 
-        IntStream.range(yearFrom, yearTo).
+        IntStream.range(yearFrom, yearTo).boxed().sorted(Collections.reverseOrder()).
                 forEach(year -> completionService.submit(new CallableRequest(currencyRatesApiService, curFrom, curTo, day, month, year)));
 
         Table rates = Table.create();
-        rates.addColumns(DoubleColumn.create("Rate", 1));
+        rates.addColumns(DoubleColumn.create("Rate", 0));
 
         IntStream.range(yearFrom, yearTo).
                 forEach(
